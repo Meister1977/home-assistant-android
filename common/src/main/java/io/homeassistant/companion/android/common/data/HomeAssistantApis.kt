@@ -7,7 +7,10 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import io.homeassistant.companion.android.common.BuildConfig
+import io.homeassistant.companion.android.common.data.prefs.PrefsRepository
+import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
+import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
@@ -15,15 +18,16 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class HomeAssistantApis @Inject constructor(
-    private val tlsHelper: TLSHelper
+    private val tlsHelper: TLSHelper,
+    private val prefsRepository: PrefsRepository
 ) {
     companion object {
         private const val LOCAL_HOST = "http://localhost/"
         const val USER_AGENT = "User-Agent"
         val USER_AGENT_STRING = "Home Assistant/${BuildConfig.VERSION_NAME} (Android ${Build.VERSION.RELEASE}; ${Build.MODEL})"
 
-        private val CALL_TIMEOUT = 30L
-        private val READ_TIMEOUT = 30L
+        private const val CALL_TIMEOUT = 30L
+        private const val READ_TIMEOUT = 30L
     }
     private fun configureOkHttpClient(builder: OkHttpClient.Builder): OkHttpClient.Builder {
         if (BuildConfig.DEBUG) {
@@ -38,6 +42,7 @@ class HomeAssistantApis @Inject constructor(
                 it.request()
                     .newBuilder()
                     .header(USER_AGENT, USER_AGENT_STRING)
+                    .addAdditionalHeaders()
                     .build()
             )
         }
@@ -76,4 +81,28 @@ class HomeAssistantApis @Inject constructor(
         .build()
 
     val okHttpClient = configureOkHttpClient(OkHttpClient.Builder()).build()
+
+    private fun Request.Builder.addAdditionalHeaders(): Request.Builder {
+        var headerName1: String?
+        var headerName2: String?
+        var headerValue1: String?
+        var headerValue2: String?
+
+        runBlocking {
+            headerName1 = prefsRepository.getHeaderName1()
+            headerName2 = prefsRepository.getHeaderName2()
+            headerValue1 = prefsRepository.getHeaderValue1()
+            headerValue2 = prefsRepository.getHeaderValue2()
+        }
+
+        if (!headerName1.isNullOrEmpty() && !headerValue1.isNullOrEmpty()) {
+            this.addHeader(headerName1!!, headerValue1!!)
+        }
+
+        if (!headerName2.isNullOrEmpty() && !headerValue2.isNullOrEmpty()) {
+            this.addHeader(headerName2!!, headerValue2!!)
+        }
+
+        return this
+    }
 }

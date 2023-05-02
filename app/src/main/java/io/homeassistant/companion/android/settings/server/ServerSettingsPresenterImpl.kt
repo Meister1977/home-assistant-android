@@ -2,6 +2,7 @@ package io.homeassistant.companion.android.settings.server
 
 import android.util.Log
 import androidx.preference.PreferenceDataStore
+import io.homeassistant.companion.android.common.data.prefs.PrefsRepository
 import io.homeassistant.companion.android.common.data.servers.ServerManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -12,7 +13,8 @@ import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 class ServerSettingsPresenterImpl @Inject constructor(
-    private val serverManager: ServerManager
+    private val serverManager: ServerManager,
+    private val prefsRepository: PrefsRepository
 ) : ServerSettingsPresenter, PreferenceDataStore() {
 
     companion object {
@@ -56,6 +58,10 @@ class ServerSettingsPresenterImpl @Inject constructor(
             "registration_name" -> serverManager.getServer(serverId)?.deviceName
             "connection_internal" -> (serverManager.getServer(serverId)?.connection?.getUrl(isInternal = true, force = true) ?: "").toString()
             "session_timeout" -> serverManager.integrationRepository(serverId).getSessionTimeOut().toString()
+            "header_name_1" -> prefsRepository.getHeaderName1()
+            "header_name_2" -> prefsRepository.getHeaderName2()
+            "header_value_1" -> prefsRepository.getHeaderValue1()
+            "header_value_2" -> prefsRepository.getHeaderValue2()
             else -> throw IllegalArgumentException("No string found by this key: $key")
         }
     }
@@ -100,6 +106,10 @@ class ServerSettingsPresenterImpl @Inject constructor(
                         Log.e(TAG, "Issue saving session timeout value", e)
                     }
                 }
+                "header_name_1" -> prefsRepository.saveHeaderName1(value?.ifBlank { null })
+                "header_name_2" -> prefsRepository.saveHeaderName2(value?.ifBlank { null })
+                "header_value_1" -> prefsRepository.saveHeaderValue1(value?.ifBlank { null })
+                "header_value_2" -> prefsRepository.saveHeaderValue2(value?.ifBlank { null })
                 else -> throw IllegalArgumentException("No string found by this key: $key")
             }
         }

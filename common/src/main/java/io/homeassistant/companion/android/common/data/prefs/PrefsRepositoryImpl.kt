@@ -20,6 +20,10 @@ class PrefsRepositoryImpl @Inject constructor(
         private const val PREF_LANG = "lang"
         private const val PREF_LOCALES = "locales"
         private const val PREF_SCREEN_ORIENTATION = "screen_orientation"
+        private const val PREF_HEADER_NAME_1 = "header_name_1"
+        private const val PREF_HEADER_NAME_2 = "header_name_2"
+        private const val PREF_HEADER_VALUE_1 = "header_value_1"
+        private const val PREF_HEADER_VALUE_2 = "header_value_2"
         private const val PREF_CONTROLS_AUTH_REQUIRED = "controls_auth_required"
         private const val PREF_CONTROLS_AUTH_ENTITIES = "controls_auth_entities"
         private const val PREF_FULLSCREEN_ENABLED = "fullscreen_enabled"
@@ -104,6 +108,38 @@ class PrefsRepositoryImpl @Inject constructor(
 
     override suspend fun saveScreenOrientation(orientation: String?) {
         localStorage.putString(PREF_SCREEN_ORIENTATION, orientation)
+    }
+
+    override suspend fun getHeaderName1(): String? {
+        return localStorage.getString(PREF_HEADER_NAME_1)
+    }
+
+    override suspend fun getHeaderName2(): String? {
+        return localStorage.getString(PREF_HEADER_NAME_2)
+    }
+
+    override suspend fun getHeaderValue1(): String? {
+        return localStorage.getString(PREF_HEADER_VALUE_1)
+    }
+
+    override suspend fun getHeaderValue2(): String? {
+        return localStorage.getString(PREF_HEADER_VALUE_2)
+    }
+
+    override suspend fun saveHeaderName1(headerName1: String?) {
+        localStorage.putString(PREF_HEADER_NAME_1, headerName1)
+    }
+
+    override suspend fun saveHeaderName2(headerName2: String?) {
+        localStorage.putString(PREF_HEADER_NAME_2, headerName2)
+    }
+
+    override suspend fun saveHeaderValue1(headerValue1: String?) {
+        localStorage.putString(PREF_HEADER_VALUE_1, headerValue1)
+    }
+
+    override suspend fun saveHeaderValue2(headerValue2: String?) {
+        localStorage.putString(PREF_HEADER_VALUE_2, headerValue2)
     }
 
     override suspend fun getControlsAuthRequired(): ControlsAuthRequiredSetting {

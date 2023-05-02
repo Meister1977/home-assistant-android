@@ -39,6 +39,22 @@ interface PrefsRepository {
 
     suspend fun saveScreenOrientation(orientation: String?)
 
+    suspend fun getHeaderName1(): String?
+
+    suspend fun saveHeaderName1(headerName1: String?)
+
+    suspend fun getHeaderName2(): String?
+
+    suspend fun saveHeaderName2(headerName2: String?)
+
+    suspend fun getHeaderValue1(): String?
+
+    suspend fun saveHeaderValue1(headerValue1: String?)
+
+    suspend fun getHeaderValue2(): String?
+
+    suspend fun saveHeaderValue2(headerValue2: String?)
+
     suspend fun isPinchToZoomEnabled(): Boolean
 
     suspend fun setPinchToZoomEnabled(enabled: Boolean)
