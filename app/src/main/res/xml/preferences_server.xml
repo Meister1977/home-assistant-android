@@ -65,41 +65,17 @@
             app:useSimpleSummaryProvider="true"/>
     </PreferenceCategory>
     <PreferenceCategory
-        android:title="@string/http_header_settings">
-        <Preference
-            android:selectable="false"
-            android:enabled="true"
-            android:key="http_header_settings_summary"
-            android:title=""
-            android:summary="@string/http_header_settings_summary" />
-        <EditTextPreference
-            android:key="header_name_1"
-            android:icon="@drawable/ic_edit"
-            android:title="@string/header_name_1"
-            app:useSimpleSummaryProvider="true"/>
-        <EditTextPreference
-            android:key="header_value_1"
-            android:icon="@drawable/ic_edit"
-            android:title="@string/header_value_1"
-            app:useSimpleSummaryProvider="true"/>
-        <EditTextPreference
-            android:key="header_name_2"
-            android:icon="@drawable/ic_edit"
-            android:title="@string/header_name_2"
-            app:useSimpleSummaryProvider="true"/>
-        <EditTextPreference
-            android:key="header_value_2"
-            android:icon="@drawable/ic_edit"
-            android:title="@string/header_value_2"
-            app:useSimpleSummaryProvider="true"/>
-    </PreferenceCategory>
-    <PreferenceCategory
         android:title="@string/other_settings">
         <Preference
             android:key="websocket"
             android:icon="@drawable/ic_websocket"
             android:title="@string/websocket_setting_name"
             android:summary="@string/websocket_setting_summary" />
+        <Preference
+            android:key="custom_http_headers"
+            android:icon="@drawable/ic_edit"
+            android:title="@string/custom_http_headers_name"
+            android:summary="@string/custom_http_headers_summary" />
         <Preference
             android:key="delete_server"
             android:icon="@drawable/ic_clear"

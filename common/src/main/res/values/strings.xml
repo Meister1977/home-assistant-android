@@ -152,6 +152,10 @@
     <string name="crash_reporting_summary">Help the developers fix bugs and crashes by leaving this enabled. If the application crashes this will automatically generate and send a report. If you notice a crash also create an issue on Github!</string>
     <string name="crash_reporting">Crash Reporting</string>
     <string name="create_template">Create Template</string>
+    <string name="custom_header_name">Header name</string>
+    <string name="custom_header_value">Header value</string>
+    <string name="custom_http_headers_name">Custom Http Headers</string>
+    <string name="custom_http_headers_summary">Manage custom headers included in every request sent to your Home Assistant server.</string>
     <string name="database_event_failure">Unable to send migration failure event to Home Assistant</string>
     <string name="database_migration_failed">Database migration failed, all sensor and widget data has been reset. Please re-enable your sensors and recreate your widgets.</string>
     <string name="delete">Delete</string>
@@ -256,10 +260,6 @@
     <string name="screen_orientation_option_value_landscape">landscape</string>
     <string name="get_help">Get Help</string>
     <string name="grant_permission">Grant Permission</string>
-    <string name="header_name_1">Name of the 1. header</string>
-    <string name="header_name_2">Name of the 2. header</string>
-    <string name="header_value_1">Value of the 1. header</string>
-    <string name="header_value_2">Value of the 2. header</string>
     <string name="help">Help</string>
     <string name="hide">Hide</string>
     <string name="high_accuracy_mode_channel_name">High accuracy location</string>
@@ -267,8 +267,6 @@
     <string name="history">History</string>
     <string name="hold_to_reorder">Tap and hold to reorder</string>
     <string name="home_assistant_not_discover">Unable to find your\nHome Assistant instance</string>
-    <string name="http_header_settings">Additional Http Headers</string>
-    <string name="http_header_settings_summary">Enter Http header items with names and values. These header items will be added to all API calls to the Home Assistant server. These header items can be used (for example) to bypass Cloudflare SSO.</string>
     <string name="icon">Icon</string>
     <string name="input_booleans">Input Booleans</string>
     <string name="input_buttons">Input Buttons</string>
