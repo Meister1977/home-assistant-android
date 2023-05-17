@@ -61,6 +61,10 @@ class IntegrationRepositoryImpl @AssistedInject constructor(
         private const val PREF_SESSION_TIMEOUT = "session_timeout"
         private const val PREF_SESSION_EXPIRE = "session_expire"
         private const val PREF_TRUSTED = "trusted"
+        private const val PREF_HEADER_NAME_1 = "header_name_1"
+        private const val PREF_HEADER_NAME_2 = "header_name_2"
+        private const val PREF_HEADER_VALUE_1 = "header_value_1"
+        private const val PREF_HEADER_VALUE_2 = "header_value_2"
         private const val PREF_SEC_WARNING_NEXT = "sec_warning_last"
         private const val PREF_LAST_USED_PIPELINE_ID = "last_used_pipeline"
         private const val PREF_LAST_USED_PIPELINE_STT = "last_used_pipeline_stt"
@@ -93,6 +97,7 @@ class IntegrationRepositoryImpl @AssistedInject constructor(
             integrationService.registerDevice(
                 url.newBuilder().addPathSegments("api/mobile_app/registrations").build(),
                 serverManager.authenticationRepository(serverId).buildBearerToken(),
+                getAdditionalHeaders(),
                 request
             )
         try {
@@ -124,7 +129,7 @@ class IntegrationRepositoryImpl @AssistedInject constructor(
         var causeException: Exception? = null
         for (it in server.connection.getApiUrls()) {
             try {
-                if (integrationService.callWebhook(it.toHttpUrlOrNull()!!, request).isSuccessful) {
+                if (integrationService.callWebhook(it.toHttpUrlOrNull()!!, getAdditionalHeaders(), request).isSuccessful) {
                     persistDeviceRegistration(deviceRegistration)
                     return
                 }
@@ -169,6 +174,10 @@ class IntegrationRepositoryImpl @AssistedInject constructor(
         localStorage.remove("${serverId}_$PREF_SEC_WARNING_NEXT")
         localStorage.remove("${serverId}_$PREF_LAST_USED_PIPELINE_ID")
         localStorage.remove("${serverId}_$PREF_LAST_USED_PIPELINE_STT")
+        localStorage.remove("${serverId}_$PREF_HEADER_NAME_1")
+        localStorage.remove("${serverId}_$PREF_HEADER_NAME_2")
+        localStorage.remove("${serverId}_$PREF_HEADER_VALUE_1")
+        localStorage.remove("${serverId}_$PREF_HEADER_VALUE_2")
         // app version and push token is device-specific
     }
 
@@ -182,6 +191,7 @@ class IntegrationRepositoryImpl @AssistedInject constructor(
             try {
                 return integrationService.getTemplate(
                     it.toHttpUrlOrNull()!!,
+                    getAdditionalHeaders(),
                     IntegrationRequest(
                         "render_template",
                         mapOf("template" to Template(template, variables))
@@ -217,6 +227,7 @@ class IntegrationRepositoryImpl @AssistedInject constructor(
                 wasSuccess =
                     integrationService.callWebhook(
                         it.toHttpUrlOrNull()!!,
+                        getAdditionalHeaders(),
                         updateLocationRequest
                     ).isSuccessful
             } catch (e: Exception) {
@@ -256,6 +267,7 @@ class IntegrationRepositoryImpl @AssistedInject constructor(
                 wasSuccess =
                     integrationService.callWebhook(
                         it.toHttpUrlOrNull()!!,
+                        getAdditionalHeaders(),
                         IntegrationRequest(
                             "call_service",
                             serviceCallRequest
@@ -287,6 +299,7 @@ class IntegrationRepositoryImpl @AssistedInject constructor(
                 wasSuccess =
                     integrationService.callWebhook(
                         it.toHttpUrlOrNull()!!,
+                        getAdditionalHeaders(),
                         IntegrationRequest(
                             "scan_tag",
                             data
@@ -323,6 +336,7 @@ class IntegrationRepositoryImpl @AssistedInject constructor(
                 wasSuccess =
                     integrationService.callWebhook(
                         it.toHttpUrlOrNull()!!,
+                        getAdditionalHeaders(),
                         IntegrationRequest(
                             "fire_event",
                             fireEventRequest
@@ -355,7 +369,7 @@ class IntegrationRepositoryImpl @AssistedInject constructor(
         var zones: Array<EntityResponse<ZoneAttributes>>? = null
         for (it in server.connection.getApiUrls()) {
             try {
-                zones = integrationService.getZones(it.toHttpUrlOrNull()!!, getZonesRequest)
+                zones = integrationService.getZones(it.toHttpUrlOrNull()!!, getAdditionalHeaders(), getZonesRequest)
             } catch (e: Exception) {
                 if (causeException == null) causeException = e
                 // Ignore failure until we are out of URLS to try, but use the first exception as cause exception
@@ -409,6 +423,38 @@ class IntegrationRepositoryImpl @AssistedInject constructor(
 
     override suspend fun setTrusted(trusted: Boolean) =
         localStorage.putBoolean("${serverId}_$PREF_TRUSTED", trusted)
+
+    override suspend fun getHeaderName1(): String? {
+        return localStorage.getString("${serverId}_$PREF_HEADER_NAME_1")
+    }
+
+    override suspend fun getHeaderName2(): String? {
+        return localStorage.getString("${serverId}_$PREF_HEADER_NAME_2")
+    }
+
+    override suspend fun getHeaderValue1(): String? {
+        return localStorage.getString("${serverId}_$PREF_HEADER_VALUE_1")
+    }
+
+    override suspend fun getHeaderValue2(): String? {
+        return localStorage.getString("${serverId}_$PREF_HEADER_VALUE_2")
+    }
+
+    override suspend fun saveHeaderName1(headerName1: String?) {
+        localStorage.putString("${serverId}_$PREF_HEADER_NAME_1", headerName1)
+    }
+
+    override suspend fun saveHeaderName2(headerName2: String?) {
+        localStorage.putString("${serverId}_$PREF_HEADER_NAME_2", headerName2)
+    }
+
+    override suspend fun saveHeaderValue1(headerValue1: String?) {
+        localStorage.putString("${serverId}_$PREF_HEADER_VALUE_1", headerValue1)
+    }
+
+    override suspend fun saveHeaderValue2(headerValue2: String?) {
+        localStorage.putString("${serverId}_$PREF_HEADER_VALUE_2", headerValue2)
+    }
 
     override suspend fun getNotificationRateLimits(): RateLimitResponse {
         val pushToken = localStorage.getString(PREF_PUSH_TOKEN) ?: ""
@@ -480,7 +526,7 @@ class IntegrationRepositoryImpl @AssistedInject constructor(
 
         for (it in server.connection.getApiUrls()) {
             try {
-                response = integrationService.getConfig(it.toHttpUrlOrNull()!!, getConfigRequest)
+                response = integrationService.getConfig(it.toHttpUrlOrNull()!!, getAdditionalHeaders(), getConfigRequest)
             } catch (e: Exception) {
                 if (causeException == null) causeException = e
                 // Ignore failure until we are out of URLS to try, but use the first exception as cause exception
@@ -591,7 +637,8 @@ class IntegrationRepositoryImpl @AssistedInject constructor(
 
         val response = integrationService.getState(
             url.newBuilder().addPathSegments("api/states/$entityId").build(),
-            serverManager.authenticationRepository(serverId).buildBearerToken()
+            serverManager.authenticationRepository(serverId).buildBearerToken(),
+            getAdditionalHeaders()
         )
         return Entity(
             response.entityId,
@@ -684,7 +731,7 @@ class IntegrationRepositoryImpl @AssistedInject constructor(
         var causeException: Exception? = null
         for (it in server.connection.getApiUrls()) {
             try {
-                integrationService.callWebhook(it.toHttpUrlOrNull()!!, integrationRequest).let {
+                integrationService.callWebhook(it.toHttpUrlOrNull()!!, getAdditionalHeaders(), integrationRequest).let {
                     // If we created sensor or it already exists
                     if (it.isSuccessful || it.code() == 409) {
                         return
@@ -719,7 +766,7 @@ class IntegrationRepositoryImpl @AssistedInject constructor(
         var causeException: Exception? = null
         for (it in server.connection.getApiUrls()) {
             try {
-                integrationService.updateSensors(it.toHttpUrlOrNull()!!, integrationRequest).let {
+                integrationService.updateSensors(it.toHttpUrlOrNull()!!, getAdditionalHeaders(), integrationRequest).let {
                     it.forEach { (_, response) ->
                         if (response["success"] == false) {
                             return false
@@ -749,6 +796,24 @@ class IntegrationRepositoryImpl @AssistedInject constructor(
         } else {
             false
         }
+    }
+
+    private suspend fun getAdditionalHeaders(): Map<String, String> {
+        val headers = mutableMapOf<String, String>()
+        val headerName1: String? = localStorage.getString("${serverId}_$PREF_HEADER_NAME_1")
+        val headerName2: String? = localStorage.getString("${serverId}_$PREF_HEADER_NAME_2")
+        val headerValue1: String? = localStorage.getString("${serverId}_$PREF_HEADER_VALUE_1")
+        val headerValue2: String? = localStorage.getString("${serverId}_$PREF_HEADER_VALUE_2")
+
+        if (!headerName1.isNullOrEmpty() && !headerValue1.isNullOrEmpty()) {
+            headers[headerName1] = headerValue1
+        }
+
+        if (!headerName2.isNullOrEmpty() && !headerValue2.isNullOrEmpty()) {
+            headers[headerName2] = headerValue2
+        }
+
+        return headers
     }
 
     private suspend fun createUpdateRegistrationRequest(deviceRegistration: DeviceRegistration): RegisterDeviceRequest {
