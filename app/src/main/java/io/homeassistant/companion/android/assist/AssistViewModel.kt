@@ -11,14 +11,14 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.homeassistant.companion.android.assist.ui.AssistMessage
 import io.homeassistant.companion.android.assist.ui.AssistUiPipeline
+import io.homeassistant.companion.android.common.R as commonR
 import io.homeassistant.companion.android.common.assist.AssistViewModelBase
 import io.homeassistant.companion.android.common.data.servers.ServerManager
 import io.homeassistant.companion.android.common.data.websocket.impl.entities.AssistPipelineResponse
 import io.homeassistant.companion.android.common.util.AudioRecorder
 import io.homeassistant.companion.android.common.util.AudioUrlPlayer
-import kotlinx.coroutines.launch
 import javax.inject.Inject
-import io.homeassistant.companion.android.common.R as commonR
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class AssistViewModel @Inject constructor(
@@ -117,15 +117,23 @@ class AssistViewModel @Inject constructor(
         }
     }
 
-    fun onNewIntent(intent: Intent?) {
+    /**
+     * Update the state of the Assist dialog for a new 'assistant triggered' action
+     * @param intent the updated intent
+     * @param lockedMatches whether the locked state changed and contents should be cleared
+     */
+    fun onNewIntent(intent: Intent?, lockedMatches: Boolean) {
         if (
-            (
-                (intent?.flags != null && intent.flags and Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT != 0) ||
-                    intent?.action in listOf(Intent.ACTION_ASSIST, "android.intent.action.VOICE_ASSIST")
-                ) &&
-            (inputMode == AssistInputMode.VOICE_ACTIVE || inputMode == AssistInputMode.VOICE_INACTIVE)
+            (intent?.flags != null && intent.flags and Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT != 0) ||
+            intent?.action in listOf(Intent.ACTION_ASSIST, "android.intent.action.VOICE_ASSIST")
         ) {
-            onMicrophoneInput()
+            if (!lockedMatches && inputMode != AssistInputMode.BLOCKED) {
+                _conversation.clear()
+                _conversation.add(startMessage)
+            }
+            if (inputMode == AssistInputMode.VOICE_ACTIVE || inputMode == AssistInputMode.VOICE_INACTIVE) {
+                onMicrophoneInput()
+            }
         }
     }
 

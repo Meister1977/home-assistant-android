@@ -82,6 +82,7 @@
     <string name="basic_sensor_name_high_accuracy_mode">High accuracy mode</string>
     <string name="basic_sensor_name_interactive">Interactive</string>
     <string name="basic_sensor_name_internal_storage">Internal storage</string>
+    <string name="basic_sensor_name_ip6_addresses">IPv6 addresses</string>
     <string name="basic_sensor_name_keyguard_locked">Keyguard locked</string>
     <string name="basic_sensor_name_keyguard_secure">Keyguard secure</string>
     <string name="basic_sensor_name_last_notification">Last notification</string>
@@ -248,7 +249,7 @@
     <string name="error_connection_failed_to">Unable to connect to %1$s</string>
     <string name="error_loading_entities">Error loading entities</string>
     <string name="error_onboarding_connection_failed">Unable to connect to Home Assistant.</string>
-    <string name="error_ssl">Unable to communicate with Home Assistant because of a SSL error.  Please ensure your certificate is valid.</string>
+    <string name="error_ssl">Unable to communicate with Home Assistant because of a SSL error. Please ensure your certificate is valid.</string>
     <string name="error_with_registration">The \'Mobile App\' integration is required to use the app, but it is not available on your Home Assistant server. Please check your server configuration and try again.</string>
     <string name="errors">Errors</string>
     <string name="error_http_generic">There was an error loading Home Assistant. Please review the connection settings and try again.\n\nError Code: %1$d \nDescription: %2$s</string>
@@ -323,6 +324,7 @@
         <item quantity="one">%d second</item>
         <item quantity="other">%d seconds</item>
     </plurals>
+    <string name="interval_in_view">In view</string>
     <string name="keep_screen_on_def">Do not lock screen when dashboard is active</string>
     <string name="keep_screen_on">Keep screen on</string>
     <string name="pinch_to_zoom_def">Allow pinch-to-zoom gesture to zoom app window</string>
@@ -395,10 +397,10 @@
     <string name="log">Log</string>
     <string name="logbook">Logbook</string>
     <string name="logged_in">Logged in</string>
-    <string name="login">Login</string>
-    <string name="login_on_phone">Login on your phone</string>
-    <string name="login_wear_os_device">Login Wear OS device</string>
-    <string name="logout">Logout</string>
+    <string name="login">Log in</string>
+    <string name="login_on_phone">Log in on your phone</string>
+    <string name="login_wear_os_device">Log in Wear OS device</string>
+    <string name="logout">Log out</string>
     <string name="lovelace_view_dashboard">Dashboard view or Dashboard</string>
     <string name="lovelace">Dashboard</string>
     <string name="mailbox">Mailbox</string>
@@ -412,10 +414,10 @@
     <string name="manage_ssids_introduction">The internal connection URL will be used when connected to one of the listed SSIDs.</string>
     <string name="manage_ssids">Manage SSID(s)</string>
     <string name="manage_this_notification">Manage this notification</string>
-    <string name="manage_tiles_summary">Setup and manage quick settings tiles here. They will not function until you set them up here.</string>
+    <string name="manage_tiles_summary">Set up and manage quick settings tiles here. They will not function until you set them up here.</string>
     <string name="manage_tiles">Manage tiles</string>
     <string name="manage_wear_device">Manage device %1$s</string>
-    <string name="manage_widgets_summary">Edit your widgets, adding/deleting can only be done from the home screen</string>
+    <string name="manage_widgets_summary">Edit your widgets. Adding/deleting can only be done from the home screen.</string>
     <string name="manage_widgets">Manage widgets</string>
     <string name="manual_desc">Enter the URL of your Home Assistant server. Make sure it includes the protocol and port. For example:\n\nhttp://homeassistant.local:8123 or \nhttps://example.duckdns.org.</string>
     <string name="manual_setup">Enter address manually</string>
@@ -458,7 +460,7 @@
     <string name="nfc_invalid_tag">This tag does not contain Home Assistant data</string>
     <string name="nfc_processing_tag_error">Error while processing NFC tag</string>
     <string name="nfc_read_tag_instructions">Hold your device near an NFC tag</string>
-    <string name="nfc_summary">Setup NFC tags</string>
+    <string name="nfc_summary">Set up NFC tags</string>
     <string name="nfc_tag_identifier">Tag identifier</string>
     <string name="nfc_title_nfc_setup">NFC tags</string>
     <string name="nfc_title_settings">NFC tags</string>
@@ -577,7 +579,7 @@
     <string name="sensor_description_battery_level">The current battery level of the device</string>
     <string name="sensor_description_battery_state">The current charging state of the battery</string>
     <string name="sensor_description_battery_temperature">The current battery temperature</string>
-    <string name="sensor_description_bluetooth_ble_emitter">Send BLE iBeacon with configured interval, used to track presence around house, e.g. together with roomassistant, esp32-mqtt-room or espresence projects.\n\nWarning: this can affect battery life, particularly if the \"Transmitter power\" setting is set to High or \"Advertise Mode\" is set to Low latency.\n\nSettings allow for specifying:\n- \"UUID\" (standard UUID format), \"Major\" and \"Minor\" (should be 0 - 65535), to tailor identifiers and groups. The default Minor value 40004 has the special meaning of forcing the beacon to be recognized by the iBeacon Tracker integration\n- \"Transmitter Power\" and \"Advertise Mode\" to help to preserve battery life (use lowest values if possible)\n - \"Measured Power\" to specify power measured at 1m (initial default -59)\n\nNote:\nAdditionally a separate setting exists (\"Enable Transmitter\") to stop or start transmitting.</string>
+    <string name="sensor_description_bluetooth_ble_emitter">Send BLE iBeacon with configured interval, used to track presence around house, e.g. together with roomassistant, esp32-mqtt-room or espresence projects.\n\nWarning: this can affect battery life, particularly if the \"Transmitter power\" setting is set to High or \"Advertise Mode\" is set to Low latency.\n\nSettings allow for specifying:\n- \"UUID\" (standard UUID format), \"Major\" and \"Minor\" (should be 0 - 65535), to tailor identifiers and groups. The default Minor value 40004 has the special meaning of forcing the beacon to be recognized by the iBeacon Tracker integration\n- \"Transmitter Power\" and \"Advertise Mode\" to help to preserve battery life (use lowest values if possible)\n - \"Measured Power\" to specify power measured at 1m (initial default -59)\n\nIt is also possible to set beacons to only be transmitted when connected to a Home Network WiFi SSID, which may be desirable for privacy and battery life.\n\nNote:\nAdditionally a separate setting exists (\"Enable Transmitter\") to stop or start transmitting.</string>
     <string name="sensor_description_bluetooth_ble_beacon_monitor">Scans for iBeacons and shows the IDs of nearby beacons and their distance in meters. A notification will be shown on the device when scanning is actively running.\n\nWarning: this can affect battery life, especially with a short \"Scan Interval\".\n\nSettings allow for specifying:\n- \"Filter Iterations\" (should be 1 - 100, default: 10), higher values will result in more stable measurements but also less responsiveness.\n- \"Filter RSSI Multiplier\" (should be 1.0 - 2.0, default: 1.05), can be used to archive more stable measurements when beacons are farther away. This will also affect responsiveness.\n- \"Scan Interval\" (default: 500) milliseconds between scans. Shorter intervals will drain the battery more quickly.\n- \"Scan Period\" (default: 1100) milliseconds to scan for beacons. Most beacons will send a signal every second so this value should be at least 1100ms.\n- \"UUID Filter\" allows to restrict the reported beacons by including (or excluding) those with the selected UUIDs.\n- \"Exclude selected UUIDs\", if false (default) only the beacons with the selected UUIDs are reported. If true all beacons except the selected ones are reported. Not available when \"UUID Filter\" is empty.\n\nNote:\nAdditionally a separate setting exists (\"Enable Beacon Monitor\") to stop or start scanning.</string>
     <string name="sensor_description_bluetooth_connection">Information about currently connected Bluetooth devices</string>
     <string name="sensor_description_bluetooth_state">Whether Bluetooth is enabled on the device</string>
@@ -603,11 +605,12 @@
     <string name="sensor_description_hotspot">Whether the WIFI hotspot is enabled</string>
     <string name="sensor_description_interactive">Whether the device is in an interactive state</string>
     <string name="sensor_description_internal_storage">Information about the total and available storage space internally</string>
+    <string name="sensor_description_ip6_addresses">The IPv6 addresses bound to the currently active network interface</string>
     <string name="sensor_description_keyguard_locked">Whether the keyguard is currently locked</string>
     <string name="sensor_description_keyguard_secure">Whether the keyguard is secured by a PIN, pattern or password or a SIM card is currently locked</string>
-    <string name="sensor_description_last_notification">The details of the last notification. You must setup an allow list or explicitly allow all notifications to be sent.\n\nNote: Sending all notification data will result in heavy battery usage.</string>
+    <string name="sensor_description_last_notification">The details of the last notification. You must set up an allow list or explicitly allow all notifications to be sent.\n\nNote: Sending all notification data will result in heavy battery usage.</string>
     <string name="sensor_description_last_reboot">The date and time of the devices last reboot. The setting below will allow you to adjust the deadband in milliseconds, if you still find the value to jump incorrectly. The default value is 60000 (1 minute).</string>
-    <string name="sensor_description_last_removed_notification">The details of the last removed notification. This can be any notification either cleared by the user or removed by an application. You must setup an allow list or explicitly allow all notifications to be sent.\n\nNote: Sending all notification data will result in heavy battery usage.</string>
+    <string name="sensor_description_last_removed_notification">The details of the last removed notification. This can be any notification either cleared by the user or removed by an application. You must set up an allow list or explicitly allow all notifications to be sent.\n\nNote: Sending all notification data will result in heavy battery usage.</string>
     <string name="sensor_description_last_update">The intent action for the last update that was sent, periodic updates will show as \"SensorWorker\".\n\nEnabling the \"Add New Intent\" toggle will create 1 setting to allow you to register for a intent action. The toggle will switch back to off once a new setting is created so you will need to turn it back on to save more intent actions. You can also clear out the setting value to remove the setting in the next update.\n\nIf you are not receiving all intents then you will need to add categories that the intent expects. To do this you will need to add each category after the intent separated by a \",\" repeating until there are no more categories. For example an intent with 2 categories will be: \"intent,category1,category2\" as the setting value.\n\nYou must restart the application after making changes to these settings to take effect.</string>
     <string name="sensor_description_light_sensor">The current level of illuminance</string>
     <string name="sensor_description_location_accurate">Allow Home Assistant to send a notification to request an accurate location along with the application periodically requesting an accurate location.  The Minimum Accuracy setting will allow you to decide how accurate the device location (in meters) has to be in order to send to Home Assistant.  The Minimum time between updates (in milliseconds) keeps the device from sending the accurate location too often. The Include in sensor update setting will make a location request with each sensor update.</string>
@@ -699,6 +702,7 @@
     <string name="sensor_setting_ble_measured_power_at_1m_title">Measured power</string>
     <string name="sensor_setting_ble_minor_title">Minor</string>
     <string name="sensor_setting_ble_transmit_enabled_title">Enable transmitter</string>
+    <string name="sensor_setting_ble_home_wifi_only_title">Transmit on Home Network WiFi SSID only</string>
     <string name="sensor_setting_ble_transmit_power_high_label">High</string>
     <string name="sensor_setting_ble_transmit_power_low_label">Low</string>
     <string name="sensor_setting_ble_transmit_power_medium_label">Medium</string>
@@ -735,6 +739,7 @@
     <string name="sensor_setting_notification_allow_list_title">Allow list</string>
     <string name="sensor_setting_notification_disable_allow_list_title">Disable allow list requirement</string>
     <string name="sensor_setting_battery_current_divisor_title">Battery current divisor</string>
+    <string name="sensor_setting_battery_voltage_divisor_title">Battery voltage divisor</string>
     <string name="sensor_settings">Sensor settings</string>
     <string name="sensor_summary">Use this to manage what sensors are enabled/disabled.</string>
     <string name="sensor_title">Manage sensors</string>
@@ -1112,7 +1117,7 @@
     <string name="basic_sensor_name_battery_power">Battery power</string>
     <string name="widget_checkbox_require_authentication">Require authentication</string>
     <string name="widget_error_authenticating">Error authenticating - is an authentication method configured?</string>
-    <string name="sensor_description_battery_power">The current wattage of the device. To get the most out of this sensor consider using the \"Fast while charging\" sensor update frequency setting. If your values are not as expected you may need to adjust the \"Battery Current Divisor\" setting to get a proper unit of amperes for the \"current\" attribute. Android is supposed to report microamperes however, some devices may report a different unit. The default will convert microamperes to amperes.</string>
+    <string name="sensor_description_battery_power">The current wattage of the device. To get the most out of this sensor consider using the \"Fast while charging\" sensor update frequency setting.\n\nIf the sensor\'s state or attributes are not as expected, you may need to adjust the current or voltage divisor to get a correct value. Some devices report these values in a different unit.\n- The "Battery current divisor" will convert from microamperes to amperes by default.\n- The "Battery voltage divisor" will convert from millivolts to volts by default.</string>
     <string name="sensor_name_accent_color_sensor">Accent color</string>
     <string name="sensor_description_accent_color_sensor">A hexadecimal color value for the dynamic accent color used in the device theme</string>
     <string name="sensor_name_dynamic_color">Dynamic color</string>
